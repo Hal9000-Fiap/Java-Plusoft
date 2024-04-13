@@ -12,5 +12,6 @@ public record CreateCustomerDTO(
         @NotBlank(message = "Email não pode ser vazio")
         @Size(max = 70, message = "Email pode ter no máximo 70 caracteres")
         String email
+
 ) {
 }
