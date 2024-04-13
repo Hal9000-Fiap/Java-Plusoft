@@ -5,7 +5,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import java.time.LocalDateTime;
 
 public record CustomerDetailsDTO(
-        Long customerid,
+        Long customerId,
         String name,
         String email,
         LocalDateTime createdAt,
