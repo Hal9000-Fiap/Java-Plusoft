@@ -28,7 +28,7 @@ public class Enterprise {
     @Column(name = "name", nullable = false, length = 80)
     private String name;
 
-    @Column(name = "cnpj", nullable = false, length = 11)
+    @Column(name = "cnpj", nullable = false, length = 14, unique = true)
     private String cnpj;
 
     @Column(name = "segment_type", nullable = false, length = 50)
