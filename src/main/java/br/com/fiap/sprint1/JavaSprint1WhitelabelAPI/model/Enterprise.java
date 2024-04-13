@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JV_SPRINT1_ENTERṔRISE")
+@EntityListeners(AuditingEntityListener.class)
 public class Enterprise {
 
     @Id
@@ -37,6 +40,9 @@ public class Enterprise {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY)
+    private List<Reclamation> reclamations;
 
     @PrePersist
     public void prePersist() {

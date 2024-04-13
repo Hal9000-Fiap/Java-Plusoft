@@ -5,13 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
 
 @Entity
 @Table(name = "JV_SPRINT1_CUSTOMER")
+@EntityListeners(AuditingEntityListener.class)
 public class Customer {
 
     @Id
@@ -31,6 +35,9 @@ public class Customer {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Reclamation> reclamations;
 
     @PrePersist
     public void prePersist() {

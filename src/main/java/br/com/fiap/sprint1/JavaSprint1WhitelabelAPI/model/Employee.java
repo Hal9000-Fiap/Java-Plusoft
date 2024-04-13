@@ -5,14 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
 
 @Entity
 @Table(name = "JV_SPRINT1_EMPLOYEE")
+@EntityListeners(AuditingEntityListener.class)
 public class Employee {
 
     @Id
@@ -37,5 +41,14 @@ public class Employee {
     public void prePersist() {
         createdAt = LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    private List<ServiceFeedBack> serviceFeedBacks;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "JV_SPRINT1_RECLATION_EMPLOYEE",
+    joinColumns = @JoinColumn(name = "employee_id"),
+    inverseJoinColumns = @JoinColumn(name = "reclamation_id"))
+    private Set<Reclamation> reclamations;
 
 }

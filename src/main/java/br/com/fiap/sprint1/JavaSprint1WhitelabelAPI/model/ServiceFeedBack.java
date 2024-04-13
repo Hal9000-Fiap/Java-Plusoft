@@ -33,6 +33,10 @@ public class ServiceFeedBack {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
