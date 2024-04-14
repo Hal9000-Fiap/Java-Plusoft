@@ -23,8 +23,8 @@ public class ServiceFeedBack {
     @Column(name = "commentary", nullable = false, length = 250)
     private String name;
 
-    @Column(name = "rating", nullable = false, length = 50)
-    private String rating;
+    @Column(name = "rating", length = 5)
+    private Double rating;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)

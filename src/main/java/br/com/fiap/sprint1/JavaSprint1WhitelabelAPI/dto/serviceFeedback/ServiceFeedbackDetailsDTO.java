@@ -1,0 +1,4 @@
+package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback;
+
+public record ServiceFeedbackDetailsDTO() {
+}
