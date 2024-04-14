@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.CreateEmployeeDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,11 +38,6 @@ public class Employee {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     private List<ServiceFeedBack> serviceFeedBacks;
 
@@ -50,5 +46,15 @@ public class Employee {
     joinColumns = @JoinColumn(name = "employee_id"),
     inverseJoinColumns = @JoinColumn(name = "reclamation_id"))
     private Set<Reclamation> reclamations;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public Employee(CreateEmployeeDTO employeeDTO) {
+        name = employeeDTO.name();
+        email = employeeDTO.email();
+    }
 
 }
