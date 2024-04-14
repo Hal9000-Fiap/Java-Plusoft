@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-public record CreateServiceFeedbackDTO(
+public record UpdateServiceFeedbackDTO(
 
         @NotBlank(message = "Nome não pode ser vazio")
         @Size(max = 50, message = "Email pode ter no máximo 50 caracteres")
