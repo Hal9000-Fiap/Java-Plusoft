@@ -5,7 +5,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.SegmentType;
 
 import java.time.LocalDateTime;
 
-public record EterpriseDetailsDTO(
+public record EnterpriseDetailsDTO(
         Long enterpriseId,
         String name,
         String cnpj,
@@ -14,7 +14,7 @@ public record EterpriseDetailsDTO(
         LocalDateTime updateAt
 ) {
 
-    public EterpriseDetailsDTO(Enterprise enterprise){
+    public EnterpriseDetailsDTO(Enterprise enterprise){
         this(
                 enterprise.getId(),
                 enterprise.getName(),

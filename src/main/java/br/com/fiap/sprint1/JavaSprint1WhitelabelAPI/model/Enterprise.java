@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.CreateEnterpriseDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.SegmentType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,8 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 
 @Entity
@@ -43,6 +43,12 @@ public class Enterprise {
 
     @OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY)
     private List<Reclamation> reclamations;
+
+    public Enterprise(CreateEnterpriseDTO enterpriseDTO) {
+        name = enterpriseDTO.name();
+        cnpj = enterpriseDTO.cnpj();
+        segmentType = enterpriseDTO.segmentType();
+    }
 
     @PrePersist
     public void prePersist() {

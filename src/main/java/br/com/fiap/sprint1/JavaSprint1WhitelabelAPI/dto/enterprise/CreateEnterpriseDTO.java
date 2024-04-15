@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.SegmentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +16,7 @@ public record CreateEnterpriseDTO(
 
         @NotBlank(message = "Tipo de segmento não pode ser vazio")
         @Size(max = 50, message = "Tipo de segmento pode ter no máximo 50 caracteres")
-        String segmentType
+        SegmentType segmentType
 
 ){
 }
