@@ -21,25 +21,25 @@ public class CustomerService {
 
     @Transactional
     public Customer create(CreateCustomerDTO customerDTO){
-        var customer = new Customer(customerDTO);
+        Customer customer = new Customer(customerDTO);
 
         return customerRepository.save(customer);
     }
 
     public List<CustomerDetailsDTO> getAll(){
-        var customerList = customerRepository.findAll()
+        List<CustomerDetailsDTO> customerList = customerRepository.findAll()
                 .stream().map(CustomerDetailsDTO::new).toList();;
         return customerList;
     }
 
     public CustomerDetailsDTO getOne(Long customerId){
-        var customer = customerRepository.getReferenceById(customerId);
+        Customer customer = customerRepository.getReferenceById(customerId);
         return new CustomerDetailsDTO(customer);
     }
 
     @Transactional
     public CustomerDetailsDTO update(Long customerId, UpdateCustomerDTO customerDTO){
-        var customer = customerRepository.getReferenceById(customerId);
+        Customer customer = customerRepository.getReferenceById(customerId);
 
         if(customer.getName() != null)
             customer.setName(customerDTO.name());
