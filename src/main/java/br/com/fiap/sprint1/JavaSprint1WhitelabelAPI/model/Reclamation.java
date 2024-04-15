@@ -1,8 +1,10 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.CreateReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.ReclamationState;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.ReclamationType;
 import jakarta.persistence.*;
+import jakarta.websocket.MessageHandler;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,6 +60,12 @@ public class Reclamation {
 
     @ManyToMany(mappedBy = "reclamations", fetch = FetchType.LAZY)
     private Set<Employee> employees;
+
+    public Reclamation(CreateReclamationDTO reclamationDTO) {
+        title = reclamationDTO.title();
+        text = reclamationDTO.text();
+        state = reclamationDTO.state();
+    }
 
     @PrePersist
     public void prePersist() {

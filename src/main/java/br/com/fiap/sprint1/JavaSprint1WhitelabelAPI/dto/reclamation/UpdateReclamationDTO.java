@@ -5,6 +5,8 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.ReclamationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 public record UpdateReclamationDTO(
 
         @NotBlank(message = "Titulo não pode ser vazio")
@@ -21,7 +23,10 @@ public record UpdateReclamationDTO(
 
         @NotBlank(message = "Estado da reclamação não pode ser vazio")
         @Size(max = 30, message = "Estado da reclamação pode ter no máximo 30 caracteres")
-        ReclamationState state
+        ReclamationState state,
+
+        @NotBlank(message = "Lista de Ids de funcionários não pode ser vazia")
+        List<Long> employeeIds
 
 ) {
 }
