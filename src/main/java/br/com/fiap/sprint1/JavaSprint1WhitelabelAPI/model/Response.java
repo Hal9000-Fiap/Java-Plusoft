@@ -20,8 +20,8 @@ public class Response {
     @Column(name = "response_id")
     private Long id;
 
-    @Column(name = "commentary", nullable = false, length = 250)
-    private String name;
+    @Column(name = "message", nullable = false, length = 250)
+    private String message;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
