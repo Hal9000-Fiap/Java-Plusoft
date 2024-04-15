@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.CreateServiceFeedbackDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,11 @@ public class ServiceFeedBack {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    public ServiceFeedBack(CreateServiceFeedbackDTO serviceFeedbackDTO) {
+        name = serviceFeedbackDTO.name();
+        rating = serviceFeedbackDTO.rating();
+    }
 
     @PrePersist
     public void prePersist() {
