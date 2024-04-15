@@ -48,7 +48,7 @@ public class ServiceFeedbackController {
         return ResponseEntity.ok(serviceFeedback);
     }
 
-    @PostMapping("{service_feedback_id}/employee/{employee_id}")
+    @PutMapping("{service_feedback_id}/employee/{employee_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> update(
             @PathVariable("service_feedback_id") Long serviceFeedbackId,
             @PathVariable("employee_id") Long employeeId,

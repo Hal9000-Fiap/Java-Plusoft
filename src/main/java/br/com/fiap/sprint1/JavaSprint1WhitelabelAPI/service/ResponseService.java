@@ -15,10 +15,12 @@ public class ResponseService {
     @Autowired
     ResponseRepository responseRepository;
 
-    @Transactional
-    public ResponseDetaisDTO create() {
-
-    }
+//    @Transactional
+//    public ResponseDetaisDTO create(
+//
+//    ) {
+//
+//    }
 
     public List<ResponseDetaisDTO> getAll() {
         List<ResponseDetaisDTO> responseList = responseRepository.findAll()

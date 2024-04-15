@@ -23,7 +23,7 @@ public class ServiceFeedBack {
     private Long id;
 
     @Column(name = "commentary", nullable = false, length = 250)
-    private String name;
+    private String commentary;
 
     @Column(name = "rating", precision = 2, scale = 1)
     private BigDecimal rating;
@@ -40,7 +40,7 @@ public class ServiceFeedBack {
     private Employee employee;
 
     public ServiceFeedBack(CreateServiceFeedbackDTO serviceFeedbackDTO) {
-        name = serviceFeedbackDTO.name();
+        commentary = serviceFeedbackDTO.commentary();
         rating = serviceFeedbackDTO.rating();
     }
 
