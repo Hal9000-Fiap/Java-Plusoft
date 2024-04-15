@@ -1,4 +1,4 @@
-package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.controller;
+package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service;
 
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.CreateEnterpriseDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.EnterpriseDetailsDTO;
