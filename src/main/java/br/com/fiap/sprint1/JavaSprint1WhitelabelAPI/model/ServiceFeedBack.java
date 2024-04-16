@@ -1,11 +1,13 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.CreateServiceFeedbackDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter@Setter
@@ -21,10 +23,10 @@ public class ServiceFeedBack {
     private Long id;
 
     @Column(name = "commentary", nullable = false, length = 250)
-    private String name;
+    private String commentary;
 
-    @Column(name = "rating", nullable = false, length = 50)
-    private String rating;
+    @Column(name = "rating", precision = 2, scale = 1)
+    private BigDecimal rating;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
@@ -36,6 +38,11 @@ public class ServiceFeedBack {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    public ServiceFeedBack(CreateServiceFeedbackDTO serviceFeedbackDTO) {
+        commentary = serviceFeedbackDTO.commentary();
+        rating = serviceFeedbackDTO.rating();
+    }
 
     @PrePersist
     public void prePersist() {

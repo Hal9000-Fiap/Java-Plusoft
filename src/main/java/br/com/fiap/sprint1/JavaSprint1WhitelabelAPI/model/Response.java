@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.CreateResponseDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,8 @@ public class Response {
     @Column(name = "response_id")
     private Long id;
 
-    @Column(name = "commentary", nullable = false, length = 250)
-    private String name;
+    @Column(name = "message", nullable = false, length = 250)
+    private String message;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
@@ -33,6 +34,10 @@ public class Response {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reclamation_id", nullable = false)
     private Reclamation reclamation;
+
+    public Response(CreateResponseDTO responseDTO) {
+        message = responseDTO.message();
+    }
 
     @PrePersist
     public void prePersist() {
