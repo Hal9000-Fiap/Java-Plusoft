@@ -27,8 +27,8 @@ public class ReclamationController {
             ){
         Reclamation reclamation = reclamationService.create(customerId, enterpriseId, reclamationDTO);
 
-        var url = uri.path("/customer/{customer_id}/enterprise/{eterprise_id}")
-                .buildAndExpand(reclamation.getId()).toUri();
+        var url = uri.path("reclamations/{reclamation_id}/customer/{customer_id}/enterprise/{eterprise_id}")
+                .buildAndExpand(reclamation.getId(), customerId, enterpriseId).toUri();
 
         return ResponseEntity.created(url).body(new ReclamationDetailsDTO(reclamation));
     }

@@ -74,6 +74,4 @@ public class ReclamationService {
         reclamationRepositry.deleteById(reclamationId);
     }
 
-
-
 }

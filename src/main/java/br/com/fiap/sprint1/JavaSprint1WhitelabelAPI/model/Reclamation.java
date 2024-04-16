@@ -47,23 +47,24 @@ public class Reclamation {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enterprise_id", nullable = false)
     private Enterprise enterprise;
 
     @OneToMany(mappedBy = "reclamation", fetch = FetchType.LAZY)
     private List<Response> responses;
 
-    @ManyToMany(mappedBy = "reclamations", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "reclamations", fetch = FetchType.EAGER)
     private Set<Employee> employees;
 
     public Reclamation(CreateReclamationDTO reclamationDTO) {
         title = reclamationDTO.title();
         text = reclamationDTO.text();
+        type = reclamationDTO.type();
         state = reclamationDTO.state();
     }
 

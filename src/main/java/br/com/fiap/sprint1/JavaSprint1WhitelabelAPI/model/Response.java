@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.CreateResponseDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,10 @@ public class Response {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reclamation_id", nullable = false)
     private Reclamation reclamation;
+
+    public Response(CreateResponseDTO responseDTO) {
+        message = responseDTO.message();
+    }
 
     @PrePersist
     public void prePersist() {
