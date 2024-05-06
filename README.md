@@ -1,4 +1,4 @@
-# Java-Plusoft-Sprint-1
+# Java-Plusoft
 API for customer complaints whitelabel
 
 ## Colaboradores:
