@@ -39,14 +39,14 @@ public class ResponseController {
         return ResponseEntity.ok(responseList);
     }
 
-    @GetMapping("{response_id}")
+    @GetMapping("/{response_id}")
     public ResponseEntity<ResponseDetaisDTO> getOne(@PathVariable("response_id") Long responseId){
         var response = responseService.getOne(responseId);
 
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("{response_id}")
+    @PutMapping("/{response_id}")
     public ResponseEntity<ResponseDetaisDTO> update(
         @PathVariable("response_id") Long responseId,
         @RequestBody @Valid UpdateResponseDTO responseDTO
@@ -56,7 +56,7 @@ public class ResponseController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("{response_id}")
+    @DeleteMapping("/{response_id}")
     public ResponseEntity<Void> delete(@PathVariable("response_id") Long responseId){
         responseService.delete(responseId);
 
