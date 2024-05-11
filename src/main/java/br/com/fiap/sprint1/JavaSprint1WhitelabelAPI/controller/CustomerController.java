@@ -40,13 +40,13 @@ public class CustomerController {
         return ResponseEntity.ok(customerList);
     }
 
-    @GetMapping({"{cudtomer_id}"})
+    @GetMapping({"/{cudtomer_id}"})
     public ResponseEntity<CustomerDetailsDTO> findOne(@PathVariable("cudtomer_id") Long customerId){
         var customer = customerService.getOne(customerId);
         return ResponseEntity.ok(customer);
     }
 
-    @PutMapping("{cudtomer_id}")
+    @PutMapping("/{cudtomer_id}")
     public ResponseEntity<CustomerDetailsDTO> update(
             @PathVariable("cudtomer_id") Long customerId,
             @RequestBody @Valid UpdateCustomerDTO customerDTO
@@ -55,7 +55,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @DeleteMapping("{cudtomer_id}")
+    @DeleteMapping("/{cudtomer_id}")
     public ResponseEntity<Void> delete(@PathVariable("cudtomer_id") Long customerId){
         customerService.delete(customerId);
         return ResponseEntity.noContent().build();
