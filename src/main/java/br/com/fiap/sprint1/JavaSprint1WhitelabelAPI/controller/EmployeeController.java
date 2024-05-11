@@ -5,6 +5,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.EmployeeDetailsD
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.UpdateEmployeeDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeDetailsDTO> create(
-            @RequestBody CreateEmployeeDTO employeeDTO,
+            @RequestBody @Valid CreateEmployeeDTO employeeDTO,
             UriComponentsBuilder uriBuilder
     ) {
         Employee employee = employeeService.create(employeeDTO);
@@ -44,7 +45,7 @@ public class EmployeeController {
     @PutMapping("{employee_id}")
     public ResponseEntity<EmployeeDetailsDTO> update(
             @PathVariable("employee_id") Long employeeId,
-            @RequestBody UpdateEmployeeDTO employeeDTO
+            @RequestBody @Valid UpdateEmployeeDTO employeeDTO
     ){
         var employee = employeeService.update(employeeId, employeeDTO);
         return ResponseEntity.ok(employee);
