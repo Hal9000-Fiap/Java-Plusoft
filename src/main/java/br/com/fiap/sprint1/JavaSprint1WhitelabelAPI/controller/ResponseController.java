@@ -4,6 +4,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.CreateResponseD
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.ResponseDetaisDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.UpdateResponseDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ResponseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ResponseController {
     @PostMapping("/reclamation/{reclamation_id}")
     public ResponseEntity<ResponseDetaisDTO> create(
         @PathVariable("reclamation_id") Long reclamationId,
-        @RequestBody CreateResponseDTO responseDTO,
+        @RequestBody @Valid CreateResponseDTO responseDTO,
         UriComponentsBuilder uri
     ){
         var response = responseService.create(reclamationId, responseDTO);
@@ -48,7 +49,7 @@ public class ResponseController {
     @PutMapping("{response_id}")
     public ResponseEntity<ResponseDetaisDTO> update(
         @PathVariable("response_id") Long responseId,
-        @RequestBody UpdateResponseDTO responseDTO
+        @RequestBody @Valid UpdateResponseDTO responseDTO
     ){
         var response = responseService.update(responseId, responseDTO);
 
