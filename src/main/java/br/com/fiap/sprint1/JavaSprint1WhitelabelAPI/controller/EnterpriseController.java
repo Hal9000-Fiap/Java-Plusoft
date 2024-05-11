@@ -35,14 +35,14 @@ public class EnterpriseController {
         return ResponseEntity.ok(enterpriseList);
     }
 
-    @GetMapping("{enterprise_id}")
+    @GetMapping("/{enterprise_id}")
     public ResponseEntity<EnterpriseDetailsDTO> findOne(@PathVariable("enterprise_id") Long enterpriseId) {
         var enterprise = enterpriseService.getOne(enterpriseId);
 
         return ResponseEntity.ok(enterprise);
     }
 
-    @PutMapping("{enterprise_id}")
+    @PutMapping("/{enterprise_id}")
     public ResponseEntity<EnterpriseDetailsDTO> update(
             @PathVariable("enterprise_id") Long enterpriseId,
             @RequestBody @Valid UpdateEnterpriseDTO enterpriseDTO
@@ -52,7 +52,7 @@ public class EnterpriseController {
         return ResponseEntity.ok(enterprise);
     }
 
-    @DeleteMapping("{enterprise_id}")
+    @DeleteMapping("/{enterprise_id}")
     public ResponseEntity<EnterpriseDetailsDTO> update(@PathVariable("enterprise_id") Long enterpriseId) {
         enterpriseService.delete(enterpriseId);
         return ResponseEntity.noContent().build();
