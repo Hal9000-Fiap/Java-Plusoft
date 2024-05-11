@@ -4,6 +4,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.CreateEnterpr
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.EnterpriseDetailsDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.UpdateEnterpriseDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EnterpriseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,8 @@ public class EnterpriseController {
     EnterpriseService enterpriseService;
 
     @PostMapping
-    public ResponseEntity<EnterpriseDetailsDTO> create(@RequestBody CreateEnterpriseDTO enterpriseDTO, UriComponentsBuilder uri) {
+    public ResponseEntity<EnterpriseDetailsDTO> create(@RequestBody @Valid CreateEnterpriseDTO enterpriseDTO,
+                                                       UriComponentsBuilder uri) {
         var enterprise = enterpriseService.create(enterpriseDTO);
         var url = uri.path("enterprises/{enterprise_id}").buildAndExpand(enterprise.getId())
                 .toUri();
@@ -43,7 +45,7 @@ public class EnterpriseController {
     @PutMapping("{enterprise_id}")
     public ResponseEntity<EnterpriseDetailsDTO> update(
             @PathVariable("enterprise_id") Long enterpriseId,
-            @RequestBody UpdateEnterpriseDTO enterpriseDTO
+            @RequestBody @Valid UpdateEnterpriseDTO enterpriseDTO
             ) {
         var enterprise = enterpriseService.update(enterpriseId, enterpriseDTO);
 
