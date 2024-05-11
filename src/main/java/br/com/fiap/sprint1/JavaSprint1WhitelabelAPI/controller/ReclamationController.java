@@ -4,6 +4,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.CreateReclam
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.ReclamationDetailsDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Reclamation;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ReclamationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ReclamationController {
     public ResponseEntity<ReclamationDetailsDTO> create(
             @PathVariable("customer_id") Long customerId,
             @PathVariable("eterprise_id") Long enterpriseId,
-            @RequestBody CreateReclamationDTO reclamationDTO,
+            @RequestBody @Valid CreateReclamationDTO reclamationDTO,
             UriComponentsBuilder uri
             ){
         Reclamation reclamation = reclamationService.create(customerId, enterpriseId, reclamationDTO);
