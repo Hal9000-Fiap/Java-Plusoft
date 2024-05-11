@@ -41,7 +41,7 @@ public class ReclamationController {
         return ResponseEntity.ok(reclamationList);
     }
 
-    @GetMapping("{reclamation_id}")
+    @GetMapping("/{reclamation_id}")
     public ResponseEntity<ReclamationDetailsDTO> findOne(
             @PathVariable("reclamation_id") Long reclamationId
             ){
@@ -50,7 +50,7 @@ public class ReclamationController {
         return ResponseEntity.ok(reclamation);
     }
 
-    @DeleteMapping("{reclamation_id}")
+    @DeleteMapping("/{reclamation_id}")
     public ResponseEntity<Void> delete(
             @PathVariable("reclamation_id") Long reclamationId
     ){
