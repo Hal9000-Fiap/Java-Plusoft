@@ -5,6 +5,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.customer.CustomerDetails
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.customer.UpdateCustomerDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDetailsDTO> create(
-            @RequestBody CreateCustomerDTO customerDTO,
+            @RequestBody @Valid CreateCustomerDTO customerDTO,
             UriComponentsBuilder uriBuilder
     ) {
         Customer customer = customerService.create(customerDTO);
@@ -48,7 +49,7 @@ public class CustomerController {
     @PutMapping("{cudtomer_id}")
     public ResponseEntity<CustomerDetailsDTO> update(
             @PathVariable("cudtomer_id") Long customerId,
-            @RequestBody UpdateCustomerDTO customerDTO
+            @RequestBody @Valid UpdateCustomerDTO customerDTO
     ){
         var customer = customerService.update(customerId, customerDTO);
         return ResponseEntity.ok(customer);
