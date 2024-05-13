@@ -10,6 +10,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EmployeeRepositor
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ServiceFeedbackRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,11 +35,9 @@ public class ServiceFeedbackService {
         return serviceFeedbackRepository.save(serviceFeedBack);
     }
 
-    public List<ServiceFeedbackDetailsDTO> getAll() {
-        List<ServiceFeedbackDetailsDTO> serviceFeedbackList= serviceFeedbackRepository.findAll()
+    public List<ServiceFeedbackDetailsDTO> getAll(Pageable pageable) {
+        return serviceFeedbackRepository.findAll(pageable)
                 .stream().map(ServiceFeedbackDetailsDTO::new).toList();
-
-        return serviceFeedbackList;
     }
 
     public ServiceFeedbackDetailsDTO getOne(Long serviceFeedbackId) {

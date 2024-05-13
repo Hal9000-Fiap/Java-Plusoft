@@ -7,6 +7,8 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.ServiceFeedBack;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ServiceFeedbackService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -33,9 +35,8 @@ public class ServiceFeedbackController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ServiceFeedbackDetailsDTO>> findAll(){
-        var serviceFeedbackList = serviceFeedbackService.getAll();
-
+    public ResponseEntity<List<ServiceFeedbackDetailsDTO>> findAll(Pageable pageable){
+        var serviceFeedbackList = serviceFeedbackService.getAll(pageable);
         return ResponseEntity.ok(serviceFeedbackList);
     }
 
