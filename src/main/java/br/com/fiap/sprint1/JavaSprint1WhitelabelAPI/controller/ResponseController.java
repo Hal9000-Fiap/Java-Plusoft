@@ -6,6 +6,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.response.UpdateResponseD
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ResponseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -33,9 +34,8 @@ public class ResponseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseDetaisDTO>> findAll(){
+    public ResponseEntity<List<ResponseDetaisDTO>> findAll(Pageable pageable){
         var responseList = responseService.getAll();
-
         return ResponseEntity.ok(responseList);
     }
 
