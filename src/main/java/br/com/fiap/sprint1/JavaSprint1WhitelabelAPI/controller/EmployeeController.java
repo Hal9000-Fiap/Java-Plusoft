@@ -7,6 +7,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,8 +32,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDetailsDTO>> findAll() {
-        var employeeList = employeeService.getAll();
+    public ResponseEntity<List<EmployeeDetailsDTO>> findAll(Pageable pageable) {
+        var employeeList = employeeService.getAll(pageable);
         return ResponseEntity.ok(employeeList);
     }
 
