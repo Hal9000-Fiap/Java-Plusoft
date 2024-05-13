@@ -7,6 +7,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -35,8 +36,8 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerDetailsDTO>> findAll() {
-        var customerList = customerService.getAll();
+    public ResponseEntity<List<CustomerDetailsDTO>> findAll(Pageable pageable) {
+        var customerList = customerService.getAll(pageable);
         return ResponseEntity.ok(customerList);
     }
 

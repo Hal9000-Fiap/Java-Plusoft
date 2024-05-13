@@ -7,9 +7,9 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,10 +26,9 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public List<CustomerDetailsDTO> getAll(){
-        List<CustomerDetailsDTO> customerList = customerRepository.findAll()
+    public List<CustomerDetailsDTO> getAll(Pageable pageable){
+        return customerRepository.findAll(pageable)
                 .stream().map(CustomerDetailsDTO::new).toList();;
-        return customerList;
     }
 
     public CustomerDetailsDTO getOne(Long customerId){
