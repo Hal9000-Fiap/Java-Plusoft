@@ -5,6 +5,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.ServiceF
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.UpdateServiceFeedbackDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.ServiceFeedBack;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ServiceFeedbackService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ServiceFeedbackController {
     @PostMapping("/employee/{employee_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> create(
             @PathVariable("employee_id") Long employeeId,
-            @RequestBody CreateServiceFeedbackDTO serviceFeedbackDTO,
+            @RequestBody @Valid CreateServiceFeedbackDTO serviceFeedbackDTO,
             UriComponentsBuilder uri
     ){
         ServiceFeedBack serviceFeedBack = serviceFeedbackService.create(employeeId, serviceFeedbackDTO);
@@ -52,7 +53,7 @@ public class ServiceFeedbackController {
     public ResponseEntity<ServiceFeedbackDetailsDTO> update(
             @PathVariable("service_feedback_id") Long serviceFeedbackId,
             @PathVariable("employee_id") Long employeeId,
-            @RequestBody UpdateServiceFeedbackDTO serviceFeedbackDTO
+            @RequestBody @Valid UpdateServiceFeedbackDTO serviceFeedbackDTO
             ) {
         var serviceFeedback = serviceFeedbackService.update(serviceFeedbackId, employeeId, serviceFeedbackDTO);
 
