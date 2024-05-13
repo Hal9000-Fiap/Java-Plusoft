@@ -6,6 +6,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise.UpdateEnterpr
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EnterpriseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,9 +30,8 @@ public class EnterpriseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EnterpriseDetailsDTO>> findAll(){
-        var enterpriseList = enterpriseService.getAll();
-
+    public ResponseEntity<List<EnterpriseDetailsDTO>> findAll(Pageable pageable){
+        var enterpriseList = enterpriseService.getAll(pageable);
         return ResponseEntity.ok(enterpriseList);
     }
 
