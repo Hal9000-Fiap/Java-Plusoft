@@ -6,6 +6,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Reclamation;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ReclamationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -35,9 +36,8 @@ public class ReclamationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReclamationDetailsDTO>> findAll() {
-        var reclamationList = reclamationService.getAll();
-
+    public ResponseEntity<List<ReclamationDetailsDTO>> findAll(Pageable pageable) {
+        var reclamationList = reclamationService.getAll(pageable);
         return ResponseEntity.ok(reclamationList);
     }
 

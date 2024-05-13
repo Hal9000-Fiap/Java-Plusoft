@@ -13,6 +13,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EnterpriseReposit
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ReclamationRepositry;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -56,11 +57,9 @@ public class ReclamationService {
         return reclamationRepositry.save(reclamation);
     }
 
-    public List<ReclamationDetailsDTO> getAll() {
-        List<ReclamationDetailsDTO> reclamationList = reclamationRepositry.findAll()
+    public List<ReclamationDetailsDTO> getAll(Pageable pageable) {
+        return reclamationRepositry.findAll(pageable)
                 .stream().map(ReclamationDetailsDTO::new).toList();
-
-        return reclamationList;
     }
 
     public ReclamationDetailsDTO getOne(Long reclamationId) {
