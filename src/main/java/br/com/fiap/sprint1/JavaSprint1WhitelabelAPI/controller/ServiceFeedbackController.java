@@ -19,7 +19,7 @@ public class ServiceFeedbackController {
     @Autowired
     ServiceFeedbackService serviceFeedbackService;
 
-    @PostMapping("employee/{employee_id}")
+    @PostMapping("/employee/{employee_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> create(
             @PathVariable("employee_id") Long employeeId,
             @RequestBody CreateServiceFeedbackDTO serviceFeedbackDTO,
@@ -39,7 +39,7 @@ public class ServiceFeedbackController {
     }
 
 
-    @GetMapping("{service_feedback_id}")
+    @GetMapping("/{service_feedback_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> findOne(
             @PathVariable("service_feedback_id") Long serviceFeedbackId
             ){
@@ -48,7 +48,7 @@ public class ServiceFeedbackController {
         return ResponseEntity.ok(serviceFeedback);
     }
 
-    @PutMapping("{service_feedback_id}/employee/{employee_id}")
+    @PutMapping("/{service_feedback_id}/employee/{employee_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> update(
             @PathVariable("service_feedback_id") Long serviceFeedbackId,
             @PathVariable("employee_id") Long employeeId,
@@ -60,7 +60,7 @@ public class ServiceFeedbackController {
     }
 
 
-    @DeleteMapping("{service_feedback_id}")
+    @DeleteMapping("/{service_feedback_id}")
     public ResponseEntity<Void> delete(
             @PathVariable("service_feedback_id") Long serviceFeedbackId
     ){
