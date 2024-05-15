@@ -39,13 +39,8 @@ public class EnterpriseService {
     @Transactional
     public EnterpriseDetailsDTO update(Long enterpriseId, UpdateEnterpriseDTO enterpriseDTO) {
         Enterprise enterprise = enterpriseRepository.getReferenceById(enterpriseId);
-
-        if(enterprise.getName() != null)
-            enterprise.setName(enterpriseDTO.name());
-
-        if(enterprise.getSegmentType() != null)
-            enterprise.setSegmentType(enterpriseDTO.segmentType());
-
+        enterprise.setName(enterpriseDTO.name());
+        enterprise.setSegmentType(enterpriseDTO.segmentType());
         enterpriseRepository.save(enterprise);
 
         return new EnterpriseDetailsDTO(enterprise);
