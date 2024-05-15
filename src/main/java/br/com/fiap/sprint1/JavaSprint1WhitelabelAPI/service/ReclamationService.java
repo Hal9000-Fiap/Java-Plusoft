@@ -38,11 +38,9 @@ public class ReclamationService {
             Long enterpriseId,
             CreateReclamationDTO reclamationDTO
     ){
-
         Reclamation reclamation = new Reclamation(reclamationDTO);
         Customer customer = customerRepository.getReferenceById(customerId);
         Enterprise enterprise = enterpriseRepository.getReferenceById(enterpriseId);
-
         Set<Employee> employees = new HashSet<>();
 
         for (Long employeeId : reclamationDTO.employeeIds()) {

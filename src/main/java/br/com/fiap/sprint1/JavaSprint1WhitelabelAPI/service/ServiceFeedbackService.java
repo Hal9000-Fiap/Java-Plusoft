@@ -56,8 +56,7 @@ public class ServiceFeedbackService {
         ServiceFeedBack serviceFeedBack = serviceFeedbackRepository.getReferenceById(serviceFeedbackId);
 
         var employeeFeedbacksIds = employee.getServiceFeedBacks().stream()
-                .map(ServiceFeedBack::getId)
-                .collect(Collectors.toList());
+                .map(ServiceFeedBack::getId).collect(Collectors.toList());
 
         if(!employeeFeedbacksIds.contains(serviceFeedbackId))
             throw new InvalidReferenceException();
@@ -65,12 +64,8 @@ public class ServiceFeedbackService {
         if(!serviceFeedBack.getCommentary().isEmpty())
             serviceFeedBack.setCommentary(serviceFeedbackDTO.commentary());
 
-
-        if(serviceFeedBack.getRating() != null)
-            serviceFeedBack.setRating(serviceFeedbackDTO.rating());
-
+        serviceFeedBack.setRating(serviceFeedbackDTO.rating());
         serviceFeedBack.setUpdatedAt(LocalDateTime.now());
-
         serviceFeedbackRepository.save(serviceFeedBack);
 
         return new ServiceFeedbackDetailsDTO(serviceFeedBack);
