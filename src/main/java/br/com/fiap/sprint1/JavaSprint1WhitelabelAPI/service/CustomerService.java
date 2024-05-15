@@ -28,7 +28,7 @@ public class CustomerService {
 
     public List<CustomerDetailsDTO> getAll(Pageable pageable){
         return customerRepository.findAll(pageable)
-                .stream().map(CustomerDetailsDTO::new).toList();;
+                .stream().map(CustomerDetailsDTO::new).toList();
     }
 
     public CustomerDetailsDTO getOne(Long customerId){
@@ -39,15 +39,9 @@ public class CustomerService {
     @Transactional
     public CustomerDetailsDTO update(Long customerId, UpdateCustomerDTO customerDTO){
         Customer customer = customerRepository.getReferenceById(customerId);
-
-        if(customer.getName() != null)
-            customer.setName(customerDTO.name());
-
-        if(customer.getEmail() != null)
-            customer.setEmail(customerDTO.email());
-
+        customer.setName(customerDTO.name());
+        customer.setEmail(customerDTO.email());
         customer.setUpdatedAt(LocalDateTime.now());
-
         customerRepository.save(customer);
 
         return new CustomerDetailsDTO(customer);
