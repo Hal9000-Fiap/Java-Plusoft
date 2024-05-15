@@ -61,9 +61,7 @@ public class ServiceFeedbackService {
         if(!employeeFeedbacksIds.contains(serviceFeedbackId))
             throw new InvalidReferenceException();
 
-        if(!serviceFeedBack.getCommentary().isEmpty())
-            serviceFeedBack.setCommentary(serviceFeedbackDTO.commentary());
-
+        serviceFeedBack.setCommentary(serviceFeedbackDTO.commentary());
         serviceFeedBack.setRating(serviceFeedbackDTO.rating());
         serviceFeedBack.setUpdatedAt(LocalDateTime.now());
         serviceFeedbackRepository.save(serviceFeedBack);
