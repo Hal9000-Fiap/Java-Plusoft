@@ -39,15 +39,9 @@ public class EmployeeService {
     @Transactional
     public EmployeeDetailsDTO update(Long employeeId, UpdateEmployeeDTO employeeDTO){
         Employee employee = employeeRepository.getReferenceById(employeeId);
-
-        if(employee.getName() != null)
-            employee.setName(employeeDTO.name());
-
-        if(employee.getEmail() != null)
-            employee.setEmail(employeeDTO.email());
-
+        employee.setName(employeeDTO.name());
+        employee.setEmail(employeeDTO.email());
         employee.setUpdatedAt(LocalDateTime.now());
-
         employeeRepository.save(employee);
 
         return new EmployeeDetailsDTO(employee);
