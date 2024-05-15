@@ -46,9 +46,7 @@ public class ResponseService {
     @Transactional
     public ResponseDetaisDTO update(Long responseId, UpdateResponseDTO responseDTO) {
         Response response = responseRepository.getReferenceById(responseId);
-
-        if(!response.getMessage().isEmpty())
-            response.setMessage(responseDTO.message());
+        response.setMessage(responseDTO.message());
 
         return new ResponseDetaisDTO(response);
     }
