@@ -2,6 +2,7 @@ package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.controller;
 
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.CreateEmployeeDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.EmployeeDetailsDTO;
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.EmployeeDetailsWithFeedbackAverageDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.UpdateEmployeeDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EmployeeService;
@@ -43,11 +44,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @GetMapping({"/{employee_id}/feedback-avarage"})
+    public ResponseEntity<EmployeeDetailsWithFeedbackAverageDTO> getAverageEmployeeFeedback(@PathVariable("employee_id") Long employeeId){
+        var employee = employeeService.getAverageEmployeeFeedback(employeeId);
+        return ResponseEntity.ok(employee);
+    }
+
     @PutMapping("/{employee_id}")
-    public ResponseEntity<EmployeeDetailsDTO> update(
-            @PathVariable("employee_id") Long employeeId,
-            @RequestBody @Valid UpdateEmployeeDTO employeeDTO
-    ){
+    public ResponseEntity<EmployeeDetailsDTO> update(@PathVariable("employee_id") Long employeeId,
+                                                     @RequestBody @Valid UpdateEmployeeDTO employeeDTO){
         var employee = employeeService.update(employeeId, employeeDTO);
         return ResponseEntity.ok(employee);
     }
