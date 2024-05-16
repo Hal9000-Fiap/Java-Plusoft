@@ -29,7 +29,6 @@ public class ServiceFeedbackService {
     public ServiceFeedBack create(Long employeeId, CreateServiceFeedbackDTO serviceFeedbackDTO) {
         Employee employee = employeeRepository.getReferenceById(employeeId);
         ServiceFeedBack serviceFeedBack = new ServiceFeedBack(serviceFeedbackDTO);
-
         serviceFeedBack.setEmployee(employee);
 
         return serviceFeedbackRepository.save(serviceFeedBack);
@@ -44,6 +43,12 @@ public class ServiceFeedbackService {
         ServiceFeedBack serviceFeedBack = serviceFeedbackRepository.getReferenceById(serviceFeedbackId);
 
         return new ServiceFeedbackDetailsDTO(serviceFeedBack);
+    }
+
+    public List<ServiceFeedbackDetailsDTO> getAllFeedbacksByEmployee(Long employeeId) {
+        Employee employee = employeeRepository.getReferenceById(employeeId);
+        var feedbackList = employee.getServiceFeedBacks();
+        return feedbackList.stream().map(ServiceFeedbackDetailsDTO::new).toList();
     }
 
     @Transactional

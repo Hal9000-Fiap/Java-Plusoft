@@ -40,14 +40,17 @@ public class ServiceFeedbackController {
         return ResponseEntity.ok(serviceFeedbackList);
     }
 
-
     @GetMapping("/{service_feedback_id}")
-    public ResponseEntity<ServiceFeedbackDetailsDTO> findOne(
-            @PathVariable("service_feedback_id") Long serviceFeedbackId
-            ){
+    public ResponseEntity<ServiceFeedbackDetailsDTO> findOne(@PathVariable("service_feedback_id") Long serviceFeedbackId){
         var serviceFeedback = serviceFeedbackService.getOne(serviceFeedbackId);
 
         return ResponseEntity.ok(serviceFeedback);
+    }
+
+    @GetMapping("employee/{employee_id}")
+    public ResponseEntity<List<ServiceFeedbackDetailsDTO>> findAllFeedbacksByEmployee(@PathVariable("employee_id") Long employeeId){
+        var serviceFeedbackList = serviceFeedbackService.getAllFeedbacksByEmployee(employeeId);
+        return ResponseEntity.ok(serviceFeedbackList);
     }
 
     @PutMapping("/{service_feedback_id}/employee/{employee_id}")
