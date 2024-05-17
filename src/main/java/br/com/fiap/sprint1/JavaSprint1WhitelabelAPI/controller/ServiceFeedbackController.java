@@ -23,11 +23,9 @@ public class ServiceFeedbackController {
     ServiceFeedbackService serviceFeedbackService;
 
     @PostMapping("/employee/{employee_id}")
-    public ResponseEntity<ServiceFeedbackDetailsDTO> create(
-            @PathVariable("employee_id") Long employeeId,
-            @RequestBody @Valid CreateServiceFeedbackDTO serviceFeedbackDTO,
-            UriComponentsBuilder uri
-    ){
+    public ResponseEntity<ServiceFeedbackDetailsDTO> create(@PathVariable("employee_id") Long employeeId,
+                                                            @RequestBody @Valid CreateServiceFeedbackDTO serviceFeedbackDTO,
+                                                            UriComponentsBuilder uri){
         ServiceFeedBack serviceFeedBack = serviceFeedbackService.create(employeeId, serviceFeedbackDTO);
         var url = uri.path("employee/{employee_id}").buildAndExpand(serviceFeedBack.getId()).toUri();
 
@@ -54,11 +52,9 @@ public class ServiceFeedbackController {
     }
 
     @PutMapping("/{service_feedback_id}/employee/{employee_id}")
-    public ResponseEntity<ServiceFeedbackDetailsDTO> update(
-            @PathVariable("service_feedback_id") Long serviceFeedbackId,
-            @PathVariable("employee_id") Long employeeId,
-            @RequestBody @Valid UpdateServiceFeedbackDTO serviceFeedbackDTO
-            ) {
+    public ResponseEntity<ServiceFeedbackDetailsDTO> update(@PathVariable("service_feedback_id") Long serviceFeedbackId,
+                                                            @PathVariable("employee_id") Long employeeId,
+                                                            @RequestBody @Valid UpdateServiceFeedbackDTO serviceFeedbackDTO) {
         var serviceFeedback = serviceFeedbackService.update(serviceFeedbackId, employeeId, serviceFeedbackDTO);
 
         return ResponseEntity.ok(serviceFeedback);
@@ -66,9 +62,7 @@ public class ServiceFeedbackController {
 
 
     @DeleteMapping("/{service_feedback_id}")
-    public ResponseEntity<Void> delete(
-            @PathVariable("service_feedback_id") Long serviceFeedbackId
-    ){
+    public ResponseEntity<Void> delete(@PathVariable("service_feedback_id") Long serviceFeedbackId){
         serviceFeedbackService.delete(serviceFeedbackId);
         return ResponseEntity.noContent().build();
     }
