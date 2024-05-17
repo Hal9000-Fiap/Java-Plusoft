@@ -7,6 +7,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.employe.UpdateEmployeeDT
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.ServiceFeedBack;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EmployeeRepository;
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ServiceFeedbackRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ public class EmployeeService {
 
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    ServiceFeedbackRepository serviceFeedbackRepository;
 
     @Transactional
     public Employee create(CreateEmployeeDTO employeeDTO){
@@ -41,11 +44,7 @@ public class EmployeeService {
 
     public EmployeeDetailsWithFeedbackAverageDTO getAverageEmployeeFeedback(Long employeeId){
         Employee employee = employeeRepository.getReferenceById(employeeId);
-        List<BigDecimal> ratingList = employee.getServiceFeedBacks().stream().map(ServiceFeedBack::getRating).toList();
-        BigDecimal sum = ratingList.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal average = ratingList.isEmpty() ?
-                BigDecimal.ZERO :
-                sum.divide(BigDecimal.valueOf(ratingList.size()), 2, BigDecimal.ROUND_HALF_UP);
+        Double average = serviceFeedbackRepository.feedbackAvaregeByEmployee(employee.getId());
 
         return new EmployeeDetailsWithFeedbackAverageDTO(employee, average);
     }
