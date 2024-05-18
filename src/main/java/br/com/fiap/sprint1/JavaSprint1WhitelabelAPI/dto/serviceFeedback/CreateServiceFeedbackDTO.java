@@ -9,7 +9,7 @@ public record CreateServiceFeedbackDTO(
         @Size(max = 250, message = "Comentário pode ter no máximo 250 caracteres")
         String commentary,
 
-        @NotEmpty(message = "Nota do atendimento não pode ser vazia")
+        @NotNull(message = "Nota do atendimento não pode ser vazia")
         @Min(value = 0, message = "Nota do atendimento deve ser no mínimo 0")
         @Max(value = 5, message = "Nota do atendimento deve ser no máximo 5")
         BigDecimal rating
