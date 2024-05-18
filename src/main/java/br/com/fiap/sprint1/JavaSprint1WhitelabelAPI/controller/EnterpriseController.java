@@ -24,8 +24,7 @@ public class EnterpriseController {
     public ResponseEntity<EnterpriseDetailsDTO> create(@RequestBody @Valid CreateEnterpriseDTO enterpriseDTO,
                                                        UriComponentsBuilder uri) {
         var enterprise = enterpriseService.create(enterpriseDTO);
-        var url = uri.path("enterprises/{enterprise_id}").buildAndExpand(enterprise.getId())
-                .toUri();
+        var url = uri.path("enterprise/{enterprise_id}").buildAndExpand(enterprise.getId()).toUri();
         return ResponseEntity.created(url).body(new EnterpriseDetailsDTO(enterprise));
     }
 
