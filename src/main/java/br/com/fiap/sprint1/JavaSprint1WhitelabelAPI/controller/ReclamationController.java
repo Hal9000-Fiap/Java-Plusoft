@@ -21,14 +21,11 @@ public class ReclamationController {
     ReclamationService reclamationService;
 
     @PostMapping("/customer/{customer_id}/enterprise/{eterprise_id}")
-    public ResponseEntity<ReclamationDetailsDTO> create(
-            @PathVariable("customer_id") Long customerId,
-            @PathVariable("eterprise_id") Long enterpriseId,
-            @RequestBody @Valid CreateReclamationDTO reclamationDTO,
-            UriComponentsBuilder uri
-            ){
+    public ResponseEntity<ReclamationDetailsDTO> create(@PathVariable("customer_id") Long customerId,
+                                                        @PathVariable("eterprise_id") Long enterpriseId,
+                                                        @RequestBody @Valid CreateReclamationDTO reclamationDTO,
+                                                        UriComponentsBuilder uri){
         Reclamation reclamation = reclamationService.create(customerId, enterpriseId, reclamationDTO);
-
         var url = uri.path("reclamations/{reclamation_id}/customer/{customer_id}/enterprise/{eterprise_id}")
                 .buildAndExpand(reclamation.getId(), customerId, enterpriseId).toUri();
 
@@ -42,18 +39,13 @@ public class ReclamationController {
     }
 
     @GetMapping("/{reclamation_id}")
-    public ResponseEntity<ReclamationDetailsDTO> findOne(
-            @PathVariable("reclamation_id") Long reclamationId
-            ){
+    public ResponseEntity<ReclamationDetailsDTO> findOne(@PathVariable("reclamation_id") Long reclamationId){
         var reclamation = reclamationService.getOne(reclamationId);
-
         return ResponseEntity.ok(reclamation);
     }
 
     @DeleteMapping("/{reclamation_id}")
-    public ResponseEntity<Void> delete(
-            @PathVariable("reclamation_id") Long reclamationId
-    ){
+    public ResponseEntity<Void> delete(@PathVariable("reclamation_id") Long reclamationId){
         reclamationService.delete(reclamationId);
         return ResponseEntity.noContent().build();
     }

@@ -38,17 +38,13 @@ public class EnterpriseController {
     @GetMapping("/{enterprise_id}")
     public ResponseEntity<EnterpriseDetailsDTO> findOne(@PathVariable("enterprise_id") Long enterpriseId) {
         var enterprise = enterpriseService.getOne(enterpriseId);
-
         return ResponseEntity.ok(enterprise);
     }
 
     @PutMapping("/{enterprise_id}")
-    public ResponseEntity<EnterpriseDetailsDTO> update(
-            @PathVariable("enterprise_id") Long enterpriseId,
-            @RequestBody @Valid UpdateEnterpriseDTO enterpriseDTO
-            ) {
+    public ResponseEntity<EnterpriseDetailsDTO> update(@PathVariable("enterprise_id") Long enterpriseId,
+                                                       @RequestBody @Valid UpdateEnterpriseDTO enterpriseDTO) {
         var enterprise = enterpriseService.update(enterpriseId, enterpriseDTO);
-
         return ResponseEntity.ok(enterprise);
     }
 

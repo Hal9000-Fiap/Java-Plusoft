@@ -41,7 +41,6 @@ public class ServiceFeedbackController {
     @GetMapping("/{service_feedback_id}")
     public ResponseEntity<ServiceFeedbackDetailsDTO> findOne(@PathVariable("service_feedback_id") Long serviceFeedbackId){
         var serviceFeedback = serviceFeedbackService.getOne(serviceFeedbackId);
-
         return ResponseEntity.ok(serviceFeedback);
     }
 
@@ -56,7 +55,6 @@ public class ServiceFeedbackController {
                                                             @PathVariable("employee_id") Long employeeId,
                                                             @RequestBody @Valid UpdateServiceFeedbackDTO serviceFeedbackDTO) {
         var serviceFeedback = serviceFeedbackService.update(serviceFeedbackId, employeeId, serviceFeedbackDTO);
-
         return ResponseEntity.ok(serviceFeedback);
     }
 

@@ -33,11 +33,9 @@ public class ReclamationService {
     EnterpriseRepository enterpriseRepository;
 
     @Transactional
-    public Reclamation create(
-            Long customerId,
-            Long enterpriseId,
-            CreateReclamationDTO reclamationDTO
-    ){
+    public Reclamation create(Long customerId,
+                              Long enterpriseId,
+                              CreateReclamationDTO reclamationDTO){
         Reclamation reclamation = new Reclamation(reclamationDTO);
         Customer customer = customerRepository.getReferenceById(customerId);
         Enterprise enterprise = enterpriseRepository.getReferenceById(enterpriseId);

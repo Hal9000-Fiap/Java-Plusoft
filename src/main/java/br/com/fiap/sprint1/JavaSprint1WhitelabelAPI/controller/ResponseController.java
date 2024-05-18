@@ -35,31 +35,26 @@ public class ResponseController {
 
     @GetMapping
     public ResponseEntity<List<ResponseDetaisDTO>> findAll(Pageable pageable){
-        var responseList = responseService.getAll();
+        var responseList = responseService.getAll(pageable);
         return ResponseEntity.ok(responseList);
     }
 
     @GetMapping("/{response_id}")
     public ResponseEntity<ResponseDetaisDTO> getOne(@PathVariable("response_id") Long responseId){
         var response = responseService.getOne(responseId);
-
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{response_id}")
-    public ResponseEntity<ResponseDetaisDTO> update(
-        @PathVariable("response_id") Long responseId,
-        @RequestBody @Valid UpdateResponseDTO responseDTO
-    ){
+    public ResponseEntity<ResponseDetaisDTO> update(@PathVariable("response_id") Long responseId,
+                                                    @RequestBody @Valid UpdateResponseDTO responseDTO){
         var response = responseService.update(responseId, responseDTO);
-
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{response_id}")
     public ResponseEntity<Void> delete(@PathVariable("response_id") Long responseId){
         responseService.delete(responseId);
-
         return ResponseEntity.noContent().build();
     }
 

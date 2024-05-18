@@ -26,10 +26,8 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDetailsDTO> create(
-            @RequestBody @Valid CreateCustomerDTO customerDTO,
-            UriComponentsBuilder uriBuilder
-    ) {
+    public ResponseEntity<CustomerDetailsDTO> create(@RequestBody @Valid CreateCustomerDTO customerDTO,
+                                                     UriComponentsBuilder uriBuilder) {
         Customer customer = customerService.create(customerDTO);
         var url = uriBuilder.path("customers/{cudtomer_id}").buildAndExpand(customer.getId()).toUri();
         return ResponseEntity.created(url).body(new CustomerDetailsDTO(customer));
@@ -48,10 +46,8 @@ public class CustomerController {
     }
 
     @PutMapping("/{cudtomer_id}")
-    public ResponseEntity<CustomerDetailsDTO> update(
-            @PathVariable("cudtomer_id") Long customerId,
-            @RequestBody @Valid UpdateCustomerDTO customerDTO
-    ){
+    public ResponseEntity<CustomerDetailsDTO> update(@PathVariable("cudtomer_id") Long customerId,
+                                                     @RequestBody @Valid UpdateCustomerDTO customerDTO){
         var customer = customerService.update(customerId, customerDTO);
         return ResponseEntity.ok(customer);
     }

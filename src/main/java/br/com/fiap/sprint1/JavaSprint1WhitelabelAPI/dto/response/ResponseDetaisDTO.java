@@ -10,7 +10,6 @@ public record ResponseDetaisDTO(
         String message,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
-
 ) {
 
     public ResponseDetaisDTO(Response response) {

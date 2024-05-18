@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 
 public record CreateReclamationDTO(
-
         @NotBlank(message = "Titulo não pode ser vazio")
         @Size(max = 70, message = "Titulo pode ter no máximo 70 caracteres")
         String title,
@@ -27,6 +26,5 @@ public record CreateReclamationDTO(
 
         @NotBlank(message = "Lista de Ids de funcionários não pode ser vazia")
         List<Long> employeeIds
-
 ) {
 }
