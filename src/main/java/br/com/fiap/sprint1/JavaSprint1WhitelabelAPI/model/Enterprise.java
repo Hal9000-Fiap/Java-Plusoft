@@ -51,9 +51,4 @@ public class Enterprise {
         segmentType = enterpriseDTO.segmentType();
     }
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
 }

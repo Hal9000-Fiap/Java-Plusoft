@@ -68,9 +68,4 @@ public class Reclamation {
         state = reclamationDTO.state();
     }
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
 }
