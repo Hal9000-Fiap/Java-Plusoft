@@ -1,5 +1,6 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.controller;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.AddEmployeeInReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.CreateReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.ReclamationDetailsDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Reclamation;
@@ -41,6 +42,13 @@ public class ReclamationController {
     @GetMapping("/{reclamation_id}")
     public ResponseEntity<ReclamationDetailsDTO> findOne(@PathVariable("reclamation_id") Long reclamationId){
         var reclamation = reclamationService.getOne(reclamationId);
+        return ResponseEntity.ok(reclamation);
+    }
+
+    @PutMapping("add-employee/{reclamation_id}")
+    public ResponseEntity<ReclamationDetailsDTO> addEmployeesInReclamation(@PathVariable("reclamation_id") Long reclamationId,
+                                                                           @RequestBody @Valid AddEmployeeInReclamationDTO reclamationDTO){
+        var reclamation = reclamationService.addEmployeesInReclamation(reclamationId, reclamationDTO);
         return ResponseEntity.ok(reclamation);
     }
 

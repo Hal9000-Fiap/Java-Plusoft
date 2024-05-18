@@ -1,8 +1,8 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.AddEmployeeInReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.CreateReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.ReclamationDetailsDTO;
-import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.UpdateServiceFeedbackDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Enterprise;
@@ -61,6 +61,21 @@ public class ReclamationService {
     public ReclamationDetailsDTO getOne(Long reclamationId) {
         Reclamation reclamation = reclamationRepositry.getReferenceById(reclamationId);
 
+        return new ReclamationDetailsDTO(reclamation);
+    }
+
+    @Transactional
+    public ReclamationDetailsDTO addEmployeesInReclamation(Long reclamationId,
+                                                           AddEmployeeInReclamationDTO reclamationDTO){
+        Reclamation reclamation = reclamationRepositry.getReferenceById(reclamationId);
+        Set<Employee> employees = reclamation.getEmployees();
+
+        for (Long employeeId : reclamationDTO.employeeIds()) {
+            Employee employee = employeeRepository.getReferenceById(employeeId);
+            employees.add(employee);
+        }
+
+        reclamationRepositry.save(reclamation);
         return new ReclamationDetailsDTO(reclamation);
     }
 
