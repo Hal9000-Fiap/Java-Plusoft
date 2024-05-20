@@ -9,6 +9,14 @@ API for customer complaints whitelabel
 - Rafael Kanfler - RM99791
 - João Dubas - RM76153
 
+## Cronograma de Desenvolvimento:
+
+Nosso projeto está sendo gerenciado a partir da metodologia Scrum. A maneira mais eficiente que encontramos para dar andamento nas sprints foi separar uma matéria para cada integrante do nosso grupo.
+
+Assim foi decidido que o Diogo Gallina seria responsável pela parte de Java. Assim fazendo o gerenciamento de tasks e entregas da Sprint. Para deixar de uma forma mais visual, abaixo segue o gerenciamento das tarefas feitas no Azure Devops.
+
+![img.png](readme-images/cronograma_sprint.png)
+
 ## Objetivo:
 
 O objetivo principal deste projeto é mitigar os conflitos entre os objetivos da nossa iniciativa de avaliação da satisfação do cliente e as distintas formas de entrada de dados provenientes das diversas empresas atendidas pela Plusoft, que abrangem uma variedade de setores industriais. Reconhecendo a necessidade de padronização dos dados recebidos pelo nosso modelo de avaliação, concebemos uma solução inovadora: o desenvolvimento de uma API para ser implementada como um serviço whitelabel em todas as empresas parceiras.
