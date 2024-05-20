@@ -39,5 +39,3 @@ Essa API tem como finalidade centralizar e padronizar o processo de submissão d
 ### RESPONSE
 ![img.png](response_routes.png)
 
-### Link do repositório
-https://github.com/orgs/Hal9000-Fiap/repositories
