@@ -15,5 +15,9 @@ O objetivo principal deste projeto é mitigar os conflitos entre os objetivos da
 
 Essa API tem como finalidade centralizar e padronizar o processo de submissão de reclamações, direcionando-as de forma eficiente para a Plusoft. Ao fornecer um portal unificado para a gestão de reclamações, visamos otimizar a experiência do cliente e fortalecer a relação com nossos parceiros comerciais através dos nossos modelos de dados que visam entregar dados de satisfação dos clientes gerando feedbacks mais precisos. 
 
+## Modelo de Entidade e Relacionamento (DER):
+
+![img.png](DER.png)
+
 ### Link do repositório
 https://github.com/orgs/Hal9000-Fiap/repositories
