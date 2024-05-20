@@ -4,7 +4,7 @@ API for customer complaints whitelabel
 ## Colaboradores:
 
 - Diogo Gallina – RM98605
-- Pedro Archila – RM
+- Pedro Archila – RM55
 - Pedro Couto - RM
 - Rafael Kanfler - RM
 - João Dubas - RM 
@@ -18,6 +18,11 @@ Essa API tem como finalidade centralizar e padronizar o processo de submissão d
 ## Modelo de Entidade e Relacionamento (DER):
 
 ![img.png](DER.png)
+
+## Rotas:
+
+### CUSTOMER:
+![img.png](customer_routes.png)
 
 ### Link do repositório
 https://github.com/orgs/Hal9000-Fiap/repositories
