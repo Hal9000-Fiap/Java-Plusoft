@@ -4,10 +4,10 @@ API for customer complaints whitelabel
 ## Colaboradores:
 
 - Diogo Gallina – RM98605
-- Pedro Archila – RM55
-- Pedro Couto - RM
-- Rafael Kanfler - RM
-- João Dubas - RM 
+- Pedro Archila – RM550450
+- Pedro Couto - RM98402
+- Rafael Kanfler - RM99791
+- João Dubas - RM76153
 
 ## Objetivo:
 
