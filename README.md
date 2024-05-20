@@ -30,5 +30,8 @@ Essa API tem como finalidade centralizar e padronizar o processo de submissão d
 ### ENTERPRISE
 ![img.png](enterprise_routes.png)
 
+### SERVICE FEEDBACK
+![img.png](service_feedbacks_routes.png)
+
 ### Link do repositório
 https://github.com/orgs/Hal9000-Fiap/repositories
