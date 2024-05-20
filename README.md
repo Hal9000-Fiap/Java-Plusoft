@@ -17,25 +17,25 @@ Essa API tem como finalidade centralizar e padronizar o processo de submissão d
 
 ## Modelo de Entidade e Relacionamento (DER):
 
-![img.png](DER.png)
+![img.png](readme-images/DER.png)
 
 ## Rotas:
 
 ### CUSTOMER
-![img.png](customer_routes.png)
+![img.png](readme-images/customer_routes.png)
 
 ### EMPLOYEE
-![img.png](employee_routes.png)
+![img.png](readme-images/employee_routes.png)
 
 ### ENTERPRISE
-![img.png](enterprise_routes.png)
+![img.png](readme-images/enterprise_routes.png)
 
 ### SERVICE FEEDBACK
-![img.png](service_feedbacks_routes.png)
+![img.png](readme-images/service_feedbacks_routes.png)
 
 ### RECLAMATION
-![img.png](reclamation_routes.png)
+![img.png](readme-images/reclamation_routes.png)
 
 ### RESPONSE
-![img.png](response_routes.png)
+![img.png](readme-images/response_routes.png)
 
