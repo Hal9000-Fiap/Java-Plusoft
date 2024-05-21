@@ -27,6 +27,9 @@ Essa API tem como finalidade centralizar e padronizar o processo de submissão d
 
 ![img.png](readme-images/DER.png)
 
+## Link do Pitch:
+https://www.youtube.com/watch?v=tqabNOd-p8E
+
 ## Rotas:
 
 ### CUSTOMER
