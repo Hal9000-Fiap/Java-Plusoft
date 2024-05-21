@@ -1,8 +1,8 @@
 package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service;
 
+import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.AddEmployeeInReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.CreateReclamationDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.reclamation.ReclamationDetailsDTO;
-import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.serviceFeedback.UpdateServiceFeedbackDTO;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Customer;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Employee;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Enterprise;
@@ -13,6 +13,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EnterpriseReposit
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ReclamationRepositry;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -32,16 +33,12 @@ public class ReclamationService {
     EnterpriseRepository enterpriseRepository;
 
     @Transactional
-    public Reclamation create(
-            Long customerId,
-            Long enterpriseId,
-            CreateReclamationDTO reclamationDTO
-    ){
-
+    public Reclamation create(Long customerId,
+                              Long enterpriseId,
+                              CreateReclamationDTO reclamationDTO){
         Reclamation reclamation = new Reclamation(reclamationDTO);
         Customer customer = customerRepository.getReferenceById(customerId);
         Enterprise enterprise = enterpriseRepository.getReferenceById(enterpriseId);
-
         Set<Employee> employees = new HashSet<>();
 
         for (Long employeeId : reclamationDTO.employeeIds()) {
@@ -56,16 +53,29 @@ public class ReclamationService {
         return reclamationRepositry.save(reclamation);
     }
 
-    public List<ReclamationDetailsDTO> getAll() {
-        List<ReclamationDetailsDTO> reclamationList = reclamationRepositry.findAll()
+    public List<ReclamationDetailsDTO> getAll(Pageable pageable) {
+        return reclamationRepositry.findAll(pageable)
                 .stream().map(ReclamationDetailsDTO::new).toList();
-
-        return reclamationList;
     }
 
     public ReclamationDetailsDTO getOne(Long reclamationId) {
         Reclamation reclamation = reclamationRepositry.getReferenceById(reclamationId);
 
+        return new ReclamationDetailsDTO(reclamation);
+    }
+
+    @Transactional
+    public ReclamationDetailsDTO addEmployeesInReclamation(Long reclamationId,
+                                                           AddEmployeeInReclamationDTO reclamationDTO){
+        Reclamation reclamation = reclamationRepositry.getReferenceById(reclamationId);
+        Set<Employee> employees = reclamation.getEmployees();
+
+        for (Long employeeId : reclamationDTO.employeeIds()) {
+            Employee employee = employeeRepository.getReferenceById(employeeId);
+            employees.add(employee);
+        }
+
+        reclamationRepositry.save(reclamation);
         return new ReclamationDetailsDTO(reclamation);
     }
 

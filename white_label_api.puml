@@ -1,0 +1,101 @@
+@startuml
+enum enums.ReclamationType {
++  DELIVERY_DELAY
++  PRODUCT_QUALITY
++  CUSTOMER_SERVICE
++  BILLING_ISSUE
++  REFUND_REQUEST
++  TECHNICAL_ISSUE
+}
+
+enum enums.ReclamationState {
++  ON_HOLD
++  COMPLETED
++  IN_PROGRESS
+}
+
+class models.ServiceFeedBack {
+- Long id
+- String commentary
+- BigDecimal rating
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- Employee employee
+}
+
+class models.Enterprise {
+- Long id
+- String name
+- String cnpj
+- SegmentType segmentType
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- List<Reclamation> reclamations
+}
+
+enum enums.SegmentType {
++  HEALTH
++  FINANCIAL
++  INSURANCE
++  EDUCATION
++  ULTILITIES
++  AGRIBUSINESS
++  TELECOM
++  SERVICES
++  CONSUMER_GOODS
++  RETAIL
++  SECURE
+}
+
+class models.Response {
+- Long id
+- String message
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- Reclamation reclamation
+}
+
+class models.Customer {
+- Long id
+- String name
+- String email
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- List<Reclamation> reclamations
+}
+
+class models.Employee {
+- Long id
+- String name
+- String email
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- List<ServiceFeedBack> serviceFeedBacks
+- Set<Reclamation> reclamations
+}
+
+class models.Reclamation {
+- Long id
+- String title
+- String text
+- ReclamationType type
+- ReclamationState state
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- Customer customer
+- Enterprise enterprise
+- List<Response> responses
+- Set<Employee> employees
+}
+
+Customer "1" *-- "0..*" Reclamation : reclamations
+Employee "1" *-- "0..*" ServiceFeedBack : serviceFeedBacks
+Enterprise "1" *-- "0..*" Reclamation : reclamations
+Reclamation "1" *-- "0..*" Response : responses
+Reclamation "0..*" *-- "0..*" Employee : employees
+Reclamation "1" *-- "1" Customer : customer
+Reclamation "1" *-- "1" Enterprise : enterprise
+Response "1" *-- "1" Reclamation : reclamation
+ServiceFeedBack "1" *-- "1" Employee : employee
+
+@enduml

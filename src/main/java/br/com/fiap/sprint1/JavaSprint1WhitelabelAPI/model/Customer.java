@@ -45,9 +45,4 @@ public class Customer {
         email = customerDTO.email();
     }
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JV_SPRINT1_RESPONSE")
+@EntityListeners(AuditingEntityListener.class)
 public class Response {
 
     @Id
@@ -37,11 +39,6 @@ public class Response {
 
     public Response(CreateResponseDTO responseDTO) {
         message = responseDTO.message();
-    }
-
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
     }
 
 }

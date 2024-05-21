@@ -13,9 +13,7 @@ public class ErrorApplicationHandler {
         return ResponseEntity.notFound().build();
     }
 
-    @ExceptionHandler({
-            InvalidReferenceException.class
-    })
+    @ExceptionHandler(InvalidReferenceException.class)
     public ResponseEntity error400(){
         return ResponseEntity.badRequest().build();
     }

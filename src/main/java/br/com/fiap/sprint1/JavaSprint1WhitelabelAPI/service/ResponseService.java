@@ -9,6 +9,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ReclamationReposi
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ResponseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,11 +32,9 @@ public class ResponseService {
         return responseRepository.save(response);
     }
 
-    public List<ResponseDetaisDTO> getAll() {
-        List<ResponseDetaisDTO> responseList = responseRepository.findAll()
+    public List<ResponseDetaisDTO> getAll(Pageable pageable) {
+        return responseRepository.findAll(pageable)
                 .stream().map(ResponseDetaisDTO::new).toList();
-
-        return responseList;
     }
 
     public ResponseDetaisDTO getOne(Long responseId) {
@@ -47,9 +46,7 @@ public class ResponseService {
     @Transactional
     public ResponseDetaisDTO update(Long responseId, UpdateResponseDTO responseDTO) {
         Response response = responseRepository.getReferenceById(responseId);
-
-        if(!response.getMessage().isEmpty())
-            response.setMessage(responseDTO.message());
+        response.setMessage(responseDTO.message());
 
         return new ResponseDetaisDTO(response);
     }

@@ -47,11 +47,6 @@ public class Employee {
     inverseJoinColumns = @JoinColumn(name = "reclamation_id"))
     private Set<Reclamation> reclamations;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
     public Employee(CreateEmployeeDTO employeeDTO) {
         name = employeeDTO.name();
         email = employeeDTO.email();
