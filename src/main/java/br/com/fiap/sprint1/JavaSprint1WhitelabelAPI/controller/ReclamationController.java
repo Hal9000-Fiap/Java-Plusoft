@@ -45,7 +45,7 @@ public class ReclamationController {
         return ResponseEntity.ok(reclamation);
     }
 
-    @PutMapping("add-employee/{reclamation_id}")
+    @PutMapping("/add-employee/{reclamation_id}")
     public ResponseEntity<ReclamationDetailsDTO> addEmployeesInReclamation(@PathVariable("reclamation_id") Long reclamationId,
                                                                            @RequestBody @Valid AddEmployeeInReclamationDTO reclamationDTO){
         var reclamation = reclamationService.addEmployeesInReclamation(reclamationId, reclamationDTO);
