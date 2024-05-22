@@ -88,14 +88,4 @@ class models.Reclamation {
 - Set<Employee> employees
 }
 
-Customer "1" *-- "0..*" Reclamation : reclamations
-Employee "1" *-- "0..*" ServiceFeedBack : serviceFeedBacks
-Enterprise "1" *-- "0..*" Reclamation : reclamations
-Reclamation "1" *-- "0..*" Response : responses
-Reclamation "0..*" *-- "0..*" Employee : employees
-Reclamation "1" *-- "1" Customer : customer
-Reclamation "1" *-- "1" Enterprise : enterprise
-Response "1" *-- "1" Reclamation : reclamation
-ServiceFeedBack "1" *-- "1" Employee : employee
-
 @enduml
