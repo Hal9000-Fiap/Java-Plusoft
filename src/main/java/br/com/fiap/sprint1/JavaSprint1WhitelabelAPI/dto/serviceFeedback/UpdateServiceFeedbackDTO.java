@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public record UpdateServiceFeedbackDTO(
-
         @NotBlank(message = "Comentário não pode ser vazio")
         @Size(max = 250, message = "Comentário pode ter no máximo 250 caracteres")
         @Schema(description = "Comentário atualizado sobre o serviço", example = "Atendimento melhorou muito.")
@@ -17,6 +16,5 @@ public record UpdateServiceFeedbackDTO(
         @Max(value = 5, message = "Nota do atendimento deve ser no máximo 5")
         @Schema(description = "Nota atualizada do atendimento", example = "5.0")
         BigDecimal rating
-
 ) {
 }

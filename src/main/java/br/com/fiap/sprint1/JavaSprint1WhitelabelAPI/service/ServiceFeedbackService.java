@@ -10,6 +10,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EmployeeRepositor
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.ServiceFeedbackRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,23 +29,26 @@ public class ServiceFeedbackService {
     public ServiceFeedBack create(Long employeeId, CreateServiceFeedbackDTO serviceFeedbackDTO) {
         Employee employee = employeeRepository.getReferenceById(employeeId);
         ServiceFeedBack serviceFeedBack = new ServiceFeedBack(serviceFeedbackDTO);
-
         serviceFeedBack.setEmployee(employee);
 
         return serviceFeedbackRepository.save(serviceFeedBack);
     }
 
-    public List<ServiceFeedbackDetailsDTO> getAll() {
-        List<ServiceFeedbackDetailsDTO> serviceFeedbackList= serviceFeedbackRepository.findAll()
+    public List<ServiceFeedbackDetailsDTO> getAll(Pageable pageable) {
+        return serviceFeedbackRepository.findAll(pageable)
                 .stream().map(ServiceFeedbackDetailsDTO::new).toList();
-
-        return serviceFeedbackList;
     }
 
     public ServiceFeedbackDetailsDTO getOne(Long serviceFeedbackId) {
         ServiceFeedBack serviceFeedBack = serviceFeedbackRepository.getReferenceById(serviceFeedbackId);
 
         return new ServiceFeedbackDetailsDTO(serviceFeedBack);
+    }
+
+    public List<ServiceFeedbackDetailsDTO> getAllFeedbacksByEmployee(Long employeeId) {
+        Employee employee = employeeRepository.getReferenceById(employeeId);
+        var feedbackList = employee.getServiceFeedBacks();
+        return feedbackList.stream().map(ServiceFeedbackDetailsDTO::new).toList();
     }
 
     @Transactional
@@ -57,21 +61,14 @@ public class ServiceFeedbackService {
         ServiceFeedBack serviceFeedBack = serviceFeedbackRepository.getReferenceById(serviceFeedbackId);
 
         var employeeFeedbacksIds = employee.getServiceFeedBacks().stream()
-                .map(ServiceFeedBack::getId)
-                .collect(Collectors.toList());
+                .map(ServiceFeedBack::getId).collect(Collectors.toList());
 
         if(!employeeFeedbacksIds.contains(serviceFeedbackId))
             throw new InvalidReferenceException();
 
-        if(!serviceFeedBack.getCommentary().isEmpty())
-            serviceFeedBack.setCommentary(serviceFeedbackDTO.commentary());
-
-
-        if(serviceFeedBack.getRating() != null)
-            serviceFeedBack.setRating(serviceFeedbackDTO.rating());
-
+        serviceFeedBack.setCommentary(serviceFeedbackDTO.commentary());
+        serviceFeedBack.setRating(serviceFeedbackDTO.rating());
         serviceFeedBack.setUpdatedAt(LocalDateTime.now());
-
         serviceFeedbackRepository.save(serviceFeedBack);
 
         return new ServiceFeedbackDetailsDTO(serviceFeedBack);

@@ -7,6 +7,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.Enterprise;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.repository.EnterpriseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,9 @@ public class EnterpriseService {
         return enterpriseRepository.save(enterprise);
     }
 
-    public List<EnterpriseDetailsDTO> getAll() {
-        List<EnterpriseDetailsDTO> enterpriseList = enterpriseRepository.findAll()
+    public List<EnterpriseDetailsDTO> getAll(Pageable pageable) {
+        return enterpriseRepository.findAll(pageable)
                 .stream().map(EnterpriseDetailsDTO::new).toList();
-
-        return enterpriseList;
     }
 
     public EnterpriseDetailsDTO getOne(Long enterpriseId) {
@@ -40,13 +39,8 @@ public class EnterpriseService {
     @Transactional
     public EnterpriseDetailsDTO update(Long enterpriseId, UpdateEnterpriseDTO enterpriseDTO) {
         Enterprise enterprise = enterpriseRepository.getReferenceById(enterpriseId);
-
-        if(enterprise.getName() != null)
-            enterprise.setName(enterpriseDTO.name());
-
-        if(enterprise.getSegmentType() != null)
-            enterprise.setSegmentType(enterpriseDTO.segmentType());
-
+        enterprise.setName(enterpriseDTO.name());
+        enterprise.setSegmentType(enterpriseDTO.segmentType());
         enterpriseRepository.save(enterprise);
 
         return new EnterpriseDetailsDTO(enterprise);

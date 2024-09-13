@@ -12,7 +12,6 @@ public record CustomerDetailsDTO(
         LocalDateTime updateAt
 ) {
 
-
     public CustomerDetailsDTO(Customer customer){
         this(
                 customer.getId(),

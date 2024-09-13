@@ -11,14 +11,12 @@ import java.util.List;
 import java.util.Set;
 
 public record ServiceFeedbackDetailsDTO(
-
         Long serviceFeedbackId,
         Long employeeId,
         String commentary,
         BigDecimal rating,
         LocalDateTime createdAt,
         LocalDateTime updateAt
-
 ) {
 
     public ServiceFeedbackDetailsDTO(ServiceFeedBack serviceFeedBack) {
