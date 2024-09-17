@@ -3,6 +3,7 @@ package br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.dto.enterprise;
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.SegmentType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Schema(description = "Informações para criação de empresa")
@@ -18,7 +19,7 @@ public record CreateEnterpriseDTO(
         @Schema(description = "CNPJ da empresa", example = "12345678000199")
         String cnpj,
 
-        @NotBlank(message = "Tipo de segmento não pode ser vazio")
+        @NotNull(message = "Tipo de segmento não pode ser vazio")
         @Schema(description = "Segmento da empresa", example = "Tecnologia")
         SegmentType segmentType
 

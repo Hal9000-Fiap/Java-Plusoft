@@ -4,6 +4,7 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.ReclamationState
 import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.model.enums.ReclamationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -21,13 +22,11 @@ public record UpdateReclamationDTO(
         @Schema(description = "Texto atualizado da reclamação", example = "A entrega atrasou mais de 3 dias.")
         String text,
 
-        @NotBlank(message = "Tipo de Reclamação não pode ser vazio")
-        @Size(max = 70, message = "Tipo de Reclamação pode ter no máximo 70 caracteres")
+        @NotNull(message = "Tipo de Reclamação não pode ser vazio")
         @Schema(description = "Tipo atualizado da reclamação", example = "Atraso")
         ReclamationType type,
 
-        @NotBlank(message = "Estado da reclamação não pode ser vazio")
-        @Size(max = 30, message = "Estado da reclamação pode ter no máximo 30 caracteres")
+        @NotNull(message = "Estado da reclamação não pode ser vazio")
         @Schema(description = "Estado atualizado da reclamação", example = "Concluída")
         ReclamationState state,
 
