@@ -7,18 +7,22 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EnterpriseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/enterprises")
 public class EnterpriseController {
@@ -36,9 +40,6 @@ public class EnterpriseController {
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
     })
-    @Parameters({
-            @Parameter(name = "enterpriseDTO", description = "Information to create a new enterprise", required = true)
-    })
     public ResponseEntity<EnterpriseDetailsDTO> create(@RequestBody @Valid CreateEnterpriseDTO enterpriseDTO, UriComponentsBuilder uri) {
         var enterprise = enterpriseService.create(enterpriseDTO);
         var url = uri.path("enterprises/{enterprise_id}").buildAndExpand(enterprise.getId())
@@ -54,8 +55,8 @@ public class EnterpriseController {
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
     })
-    public ResponseEntity<List<EnterpriseDetailsDTO>> findAll(){
-        var enterpriseList = enterpriseService.getAll();
+    public ResponseEntity<List<EnterpriseDetailsDTO>> findAll(Pageable page){
+        var enterpriseList = enterpriseService.getAll(page);
 
         return ResponseEntity.ok(enterpriseList);
     }
@@ -71,7 +72,7 @@ public class EnterpriseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be fetched", required = true)
+            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be fetched", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<EnterpriseDetailsDTO> findOne(@PathVariable("enterprise_id") Long enterpriseId) {
         var enterprise = enterpriseService.getOne(enterpriseId);
@@ -92,8 +93,7 @@ public class EnterpriseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be updated", required = true),
-            @Parameter(name = "enterpriseDTO", description = "Updated enterprise data", required = true)
+            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be updated", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<EnterpriseDetailsDTO> update(
             @PathVariable("enterprise_id") Long enterpriseId,
@@ -115,7 +115,7 @@ public class EnterpriseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be deleted", required = true)
+            @Parameter(name = "enterprise_id", description = "ID of the enterprise to be deleted", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<EnterpriseDetailsDTO> update(@PathVariable("enterprise_id") Long enterpriseId) {
         enterpriseService.delete(enterpriseId);

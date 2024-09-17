@@ -8,18 +8,22 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -36,9 +40,6 @@ public class EmployeeController {
             @Content(schema = @Schema())),
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
-    })
-    @Parameters({
-            @Parameter(name = "employeeDTO", description = "Information to create a new employee", required = true)
     })
     public ResponseEntity<EmployeeDetailsDTO> create(
             @RequestBody @Valid CreateEmployeeDTO employeeDTO,
@@ -57,8 +58,8 @@ public class EmployeeController {
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
     })
-    public ResponseEntity<List<EmployeeDetailsDTO>> findAll() {
-        var employeeList = employeeService.getAll();
+    public ResponseEntity<List<EmployeeDetailsDTO>> findAll(Pageable page) {
+        var employeeList = employeeService.getAll(page);
         return ResponseEntity.ok(employeeList);
     }
 
@@ -73,7 +74,7 @@ public class EmployeeController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "employee_id", description = "ID of the employee to be fetched", required = true)
+            @Parameter(name = "employee_id", description = "ID of the employee to be fetched", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<EmployeeDetailsDTO> findOne(@PathVariable("employee_id") Long employeeId){
         var employee = employeeService.getOne(employeeId);
@@ -93,8 +94,7 @@ public class EmployeeController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "employee_id", description = "ID of the employee to be updated", required = true),
-            @Parameter(name = "employeeDTO", description = "Updated employee data", required = true)
+            @Parameter(name = "employee_id", description = "ID of the employee to be fetched", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<EmployeeDetailsDTO> update(
             @PathVariable("employee_id") Long employeeId,
@@ -115,7 +115,7 @@ public class EmployeeController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "employee_id", description = "ID of the employee to be deleted", required = true)
+            @Parameter(name = "employee_id", description = "ID of the employee to be fetched", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<Void> delete(@PathVariable("employee_id") Long employeeId){
         employeeService.delete(employeeId);

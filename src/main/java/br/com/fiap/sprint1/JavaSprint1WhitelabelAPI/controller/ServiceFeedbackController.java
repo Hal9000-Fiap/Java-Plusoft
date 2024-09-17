@@ -8,18 +8,22 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ServiceFeedbackServi
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/servicefeedbacks")
 public class ServiceFeedbackController {
@@ -36,8 +40,7 @@ public class ServiceFeedbackController {
             @ApiResponse(responseCode = "403", description = "Unauthorized request")
     })
     @Parameters({
-            @Parameter(name = "employee_id", description = "ID of the employee receiving the feedback", required = true),
-            @Parameter(name = "serviceFeedbackDTO", description = "Details of the feedback", required = true)
+            @Parameter(name = "employee_id", description = "ID of the employee receiving the feedback", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ServiceFeedbackDetailsDTO> create(
             @PathVariable("employee_id") Long employeeId,
@@ -57,8 +60,8 @@ public class ServiceFeedbackController {
             @Content(schema = @Schema(implementation = ServiceFeedbackDetailsDTO.class))),
             @ApiResponse(responseCode = "403", description = "Unauthorized request")
     })
-    public ResponseEntity<List<ServiceFeedbackDetailsDTO>> findAll(){
-        var serviceFeedbackList = serviceFeedbackService.getAll();
+    public ResponseEntity<List<ServiceFeedbackDetailsDTO>> findAll(Pageable page){
+        var serviceFeedbackList = serviceFeedbackService.getAll(page);
 
         return ResponseEntity.ok(serviceFeedbackList);
     }
@@ -73,7 +76,7 @@ public class ServiceFeedbackController {
             @ApiResponse(responseCode = "403", description = "Unauthorized request")
     })
     @Parameters({
-            @Parameter(name = "service_feedback_id", description = "ID of the feedback to retrieve", required = true)
+            @Parameter(name = "service_feedback_id", description = "ID of the feedback to retrieve", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ServiceFeedbackDetailsDTO> findOne(
             @PathVariable("service_feedback_id") Long serviceFeedbackId
@@ -92,9 +95,8 @@ public class ServiceFeedbackController {
             @ApiResponse(responseCode = "403", description = "Unauthorized request")
     })
     @Parameters({
-            @Parameter(name = "service_feedback_id", description = "ID of the feedback to update", required = true),
-            @Parameter(name = "employee_id", description = "ID of the employee associated with the feedback", required = true),
-            @Parameter(name = "serviceFeedbackDTO", description = "Details of the feedback to update", required = true)
+            @Parameter(name = "service_feedback_id", description = "ID of the feedback to update", required = true, in = ParameterIn.PATH),
+            @Parameter(name = "employee_id", description = "ID of the employee associated with the feedback", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ServiceFeedbackDetailsDTO> update(
             @PathVariable("service_feedback_id") Long serviceFeedbackId,
@@ -108,6 +110,18 @@ public class ServiceFeedbackController {
 
 
     @DeleteMapping("{service_feedback_id}")
+    @Operation(summary = "Delete service feedback", description = "Delete service feedback")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Service Feedback deleted successfully", content =
+            @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "404", description = "Service Feedback not found", content =
+            @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
+            @Content(schema = @Schema()))
+    })
+    @Parameters({
+            @Parameter(name = "service_feedback_id", description = "ID of the feedback to retrieve", required = true, in = ParameterIn.PATH)
+    })
     public ResponseEntity<Void> delete(
             @PathVariable("service_feedback_id") Long serviceFeedbackId
     ){

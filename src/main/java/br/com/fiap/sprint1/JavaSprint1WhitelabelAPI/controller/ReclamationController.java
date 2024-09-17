@@ -7,18 +7,22 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ReclamationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/reclamations")
 public class ReclamationController {
@@ -26,7 +30,7 @@ public class ReclamationController {
     @Autowired
     ReclamationService reclamationService;
 
-    @PostMapping("/customer/{customer_id}/enterprise/{eterprise_id}")
+    @PostMapping("/customer/{customer_id}/enterprise/{enterprise_id}")
     @Operation(summary = "Create a new reclamation", description = "Register a new reclamation for a customer and an enterprise")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Reclamation created successfully", content =
@@ -37,19 +41,18 @@ public class ReclamationController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "customer_id", description = "ID of the customer creating the reclamation", required = true),
-            @Parameter(name = "enterprise_id", description = "ID of the enterprise associated with the reclamation", required = true),
-            @Parameter(name = "reclamationDTO", description = "Details of the reclamation being created", required = true)
+            @Parameter(name = "customer_id", description = "ID of the customer creating the reclamation", required = true, in = ParameterIn.PATH),
+            @Parameter(name = "enterprise_id", description = "ID of the enterprise associated with the reclamation", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ReclamationDetailsDTO> create(
             @PathVariable("customer_id") Long customerId,
-            @PathVariable("eterprise_id") Long enterpriseId,
+            @PathVariable("enterprise_id") Long enterpriseId,
             @RequestBody @Valid CreateReclamationDTO reclamationDTO,
             UriComponentsBuilder uri
             ){
         Reclamation reclamation = reclamationService.create(customerId, enterpriseId, reclamationDTO);
 
-        var url = uri.path("reclamations/{reclamation_id}/customer/{customer_id}/enterprise/{eterprise_id}")
+        var url = uri.path("reclamations/{reclamation_id}/customer/{customer_id}/enterprise/{enterprise_id}")
                 .buildAndExpand(reclamation.getId(), customerId, enterpriseId).toUri();
 
         return ResponseEntity.created(url).body(new ReclamationDetailsDTO(reclamation));
@@ -63,8 +66,8 @@ public class ReclamationController {
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
     })
-    public ResponseEntity<List<ReclamationDetailsDTO>> findAll() {
-        var reclamationList = reclamationService.getAll();
+    public ResponseEntity<List<ReclamationDetailsDTO>> findAll(Pageable page) {
+        var reclamationList = reclamationService.getAll(page);
 
         return ResponseEntity.ok(reclamationList);
     }
@@ -80,7 +83,7 @@ public class ReclamationController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "reclamation_id", description = "ID of the reclamation to be fetched", required = true)
+            @Parameter(name = "reclamation_id", description = "ID of the reclamation to be fetched", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ReclamationDetailsDTO> findOne(
             @PathVariable("reclamation_id") Long reclamationId
@@ -101,7 +104,7 @@ public class ReclamationController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "reclamation_id", description = "ID of the reclamation to be deleted", required = true)
+            @Parameter(name = "reclamation_id", description = "ID of the reclamation to be deleted", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<Void> delete(
             @PathVariable("reclamation_id") Long reclamationId

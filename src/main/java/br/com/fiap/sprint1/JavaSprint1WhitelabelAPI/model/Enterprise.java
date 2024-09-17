@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "JV_SPRINT1_ENTERṔRISE")
+@Table(name = "JV_SPRINT1_ENTERPRISE")
 @EntityListeners(AuditingEntityListener.class)
 public class Enterprise {
 

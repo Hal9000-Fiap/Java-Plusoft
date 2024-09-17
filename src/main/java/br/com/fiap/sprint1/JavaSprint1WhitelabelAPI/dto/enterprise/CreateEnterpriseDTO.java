@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "Informações para criação de empresa")
 public record CreateEnterpriseDTO(
 
         @NotBlank(message = "Nome não pode ser vazio")

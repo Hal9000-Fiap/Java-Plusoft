@@ -8,21 +8,25 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/customers")
 @Tag(name = "Customer", description = "CRUD actions to customers")
@@ -30,6 +34,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public CustomerController(CustomerService customerService){
         this.customerService = customerService;
@@ -44,15 +51,12 @@ public class CustomerController {
             @Content(schema = @Schema())),
             @ApiResponse(responseCode = "400", description = "Invalid data")
     })
-    @Parameters({
-            @Parameter(name = "customerDTO", description = "Information to create a new customer", required = true)
-    })
     public ResponseEntity<CustomerDetailsDTO> create(
             @RequestBody @Valid CreateCustomerDTO customerDTO,
             UriComponentsBuilder uriBuilder
     ) {
         Customer customer = customerService.create(customerDTO);
-        var url = uriBuilder.path("customers/{cudtomer_id}").buildAndExpand(customer.getId()).toUri();
+        var url = uriBuilder.path("customers/{customer_id}").buildAndExpand(customer.getId()).toUri();
         return ResponseEntity.created(url).body(new CustomerDetailsDTO(customer));
     }
 
@@ -70,7 +74,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerList);
     }
 
-    @GetMapping({"{cudtomer_id}"})
+    @GetMapping({"{customer_id}"})
     @Operation(summary = "Fetch customer by ID", description = "Fetch a specific customer from the database by its ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Customer fetched successfully", content =
@@ -82,14 +86,14 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Invalid request")
     })
     @Parameters({
-            @Parameter(name = "customer_id", description = "ID of the customer to be fetched", required = true)
+            @Parameter(name = "customer_id", description = "ID of the customer to be get", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<CustomerDetailsDTO> findOne(@PathVariable("cudtomer_id") Long customerId){
         var customer = customerService.getOne(customerId);
         return ResponseEntity.ok(customer);
     }
 
-    @PutMapping("{cudtomer_id}")
+    @PutMapping("{customer_id}")
     @Operation(summary = "Update customer details", description = "Update a specific customer's details by its ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Customer updated successfully", content =
@@ -101,18 +105,17 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Invalid data")
     })
     @Parameters({
-            @Parameter(name = "customer_id", description = "ID of the customer to be updated", required = true),
-            @Parameter(name = "customerDTO", description = "Updated customer data", required = true)
+            @Parameter(name = "customer_id", description = "ID of the customer to be update", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<CustomerDetailsDTO> update(
-            @PathVariable("cudtomer_id") Long customerId,
+            @PathVariable("customer_id") Long customerId,
             @RequestBody @Valid UpdateCustomerDTO customerDTO
     ){
         var customer = customerService.update(customerId, customerDTO);
         return ResponseEntity.ok(customer);
     }
 
-    @DeleteMapping("{cudtomer_id}")
+    @DeleteMapping("{customer_id}")
     @Operation(summary = "Delete customer", description = "Delete a customer from the database by its ID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Customer deleted successfully"),
@@ -123,9 +126,9 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Invalid request")
     })
     @Parameters({
-            @Parameter(name = "customer_id", description = "ID of the customer to be deleted", required = true)
+            @Parameter(name = "customer_id", description = "ID of the customer to be deleted", required = true, in = ParameterIn.PATH)
     })
-    public ResponseEntity<Void> delete(@PathVariable("cudtomer_id") Long customerId){
+    public ResponseEntity<Void> delete(@PathVariable("customer_id") Long customerId){
         customerService.delete(customerId);
         return ResponseEntity.noContent().build();
     }

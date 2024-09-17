@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
+@Schema(description = "Informações para cadastro de reclamações")
 public record CreateReclamationDTO(
 
         @NotBlank(message = "Título não pode ser vazio")

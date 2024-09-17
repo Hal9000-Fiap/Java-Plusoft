@@ -7,18 +7,22 @@ import br.com.fiap.sprint1.JavaSprint1WhitelabelAPI.service.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerJWT")
 @RestController
 @RequestMapping("/responses")
 public class ResponseController {
@@ -37,8 +41,7 @@ public class ResponseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "reclamation_id", description = "ID of the reclamation to which the response belongs", required = true),
-            @Parameter(name = "responseDTO", description = "Details of the response being created", required = true)
+            @Parameter(name = "reclamation_id", description = "ID of the reclamation to which the response belongs", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ResponseDetaisDTO> create(
         @PathVariable("reclamation_id") Long reclamationId,
@@ -60,8 +63,8 @@ public class ResponseController {
             @ApiResponse(responseCode = "403", description = "Not authorized or invalid token", content =
             @Content(schema = @Schema()))
     })
-    public ResponseEntity<List<ResponseDetaisDTO>> findAll(){
-        var responseList = responseService.getAll();
+    public ResponseEntity<List<ResponseDetaisDTO>> findAll(Pageable page){
+        var responseList = responseService.getAll(page);
 
         return ResponseEntity.ok(responseList);
     }
@@ -77,7 +80,7 @@ public class ResponseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "response_id", description = "ID of the response to be retrieved", required = true)
+            @Parameter(name = "response_id", description = "ID of the response to be retrieved", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ResponseDetaisDTO> getOne(@PathVariable("response_id") Long responseId){
         var response = responseService.getOne(responseId);
@@ -97,8 +100,7 @@ public class ResponseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "response_id", description = "ID of the response to be updated", required = true),
-            @Parameter(name = "responseDTO", description = "Details of the response to be updated", required = true)
+            @Parameter(name = "response_id", description = "ID of the response to be updated", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<ResponseDetaisDTO> update(
         @PathVariable("response_id") Long responseId,
@@ -120,7 +122,7 @@ public class ResponseController {
             @Content(schema = @Schema()))
     })
     @Parameters({
-            @Parameter(name = "response_id", description = "ID of the response to be deleted", required = true)
+            @Parameter(name = "response_id", description = "ID of the response to be deleted", required = true, in = ParameterIn.PATH)
     })
     public ResponseEntity<Void> delete(@PathVariable("response_id") Long responseId){
         responseService.delete(responseId);

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
+@Schema(description = "Informações para cadastro de feedback de serviços presatadps")
 public record CreateServiceFeedbackDTO(
         @NotBlank(message = "Comentário não pode ser vazio")
         @Size(max = 250, message = "Comentário pode ter no máximo 250 caracteres")
