@@ -19,7 +19,6 @@ public record CreateEnterpriseDTO(
         String cnpj,
 
         @NotBlank(message = "Tipo de segmento não pode ser vazio")
-        @Size(max = 50, message = "Tipo de segmento pode ter no máximo 50 caracteres")
         @Schema(description = "Segmento da empresa", example = "Tecnologia")
         SegmentType segmentType
 
